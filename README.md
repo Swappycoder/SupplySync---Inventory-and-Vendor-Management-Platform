@@ -1,144 +1,243 @@
-# SupplySync---Inventory-and-Vendor-Management-Platform
+# 📦 SupplySync – Inventory & Vendor Management Platform
 
-# Bussiness Model:
-1. B2B/Customers place order for products.
-2. Vendors list products and mage Inventory.
-3. Admin manages users, vendors, approvals, disputes.
-4. Driver handles delivery.
-5. System tracks stocks, order, payments, deivery status.
+## 🏢 Business Model
 
-# Flow: 
-Customer --> Place Order --> Vendor Confirms --> Inventory Updated --> Driver Assigned --> Delivery --> Payment --> Analytics.
+SupplySync is a B2B Inventory & Vendor Management Platform where:
 
-# User Roles:
-## Admin:
-1. Approves Vendors.
-2. Manages platform users.
-3. Monitors all orders and revenue.
-4. Controls pricing rules and commisions.
-5. View system wide analyics.
+* Business customers place bulk orders for products.
+* Vendors list products and manage inventory.
+* Admin manages users, vendors, approvals, disputes, and commissions.
+* Drivers handle deliveries.
+* The system tracks inventory, orders, payments, and delivery status in real-time.
 
-## Vendor:
-1. Manages products and stocks.
-2. Accepts/Rejects orders.
-3. Updates Inventory.
-4. Tracks revenue and fulfilment rate.
+---
 
-## Customer(Client):
-1. Browse vendors and products.
-2. Place Bulk orders.
-3. Tracks Delivery.
-4. View invoice and order history.
+## 🔁 Business Flow (High-Level)
 
-## Driver/Logistics Partner:
-1. Accepts Delivery tasks.
-2. Updates Delivery Status.
-3. Track routes and delivery history.
+Customer
+→ Place Order
+→ Vendor Confirms
+→ Inventory Updated
+→ Driver Assigned
+→ Delivery Completed
+→ Payment Processed
+→ Analytics & Reporting
 
-## Warehouse Manager:
-1. Manage warehouse stock.
-2. Update packing and dispatching.
+---
 
-# Functional Requirements:
-1. Login/ Register
-2. Role Based Access
+## 👥 User Roles & Responsibilities
 
-## User Management:
-1. Create/update users
-2. Vendors onboarding and approval.
-3. Assign roles and permissions.
-4. CRUD operations on products
-5. Stock in/out
-6. Low stock alerts
-7. Batch and expiry alerts.
-8. Place orders
-9. order approval workflow
-10. order status [pending -> accepted -> packed -> dispatched -> Delivered
-11. order cancellation and return worflow.
-12. Vendor profile and rating
-13. Vendor wise product listings
-14. performance tracking of vendors
-15. delivery tracking
-16. proof of delivery (OTP).
-17. Invoice generation.
-18. Payment tracking
-19. Refund handling
-20. Commision calculation
-21. Sales analytics
-22. Customer behaviour
+### 👑 Admin
 
-# Non - Functional Requirements:
+* Approves vendors
+* Manages platform users
+* Monitors all orders and revenue
+* Controls pricing rules and commissions
+* Views system-wide analytics
 
+### 🏭 Vendor
 
-# High level Architecture
+* Manages products and stock
+* Accepts / rejects orders
+* Updates inventory
+* Tracks revenue and fulfillment rate
 
-Frontend (Reactjs)
-Backend (Springboot/node.js)
-DataBase(MySQL)
-Auth Service
-Order Service
-Inventory Service
-Analytics Service
+### 🧑‍💼 Customer (Business Client)
 
-# Core Modules
-## Authentication and Authorization:
-JWT tokens and Roles based access middleware.
+* Browse vendors and products
+* Place bulk orders
+* Track delivery
+* View invoices and order history
 
-## User Management
-Role Assignment and Vendor approval.
+### 🚚 Driver / Logistics Partner
 
-## order management
-LifeCycle of order and Status transition
+* Accept delivery tasks
+* Update delivery status
+* Track routes and delivery history
 
-## Inventory Module
-Real-time stock sync and Threshold Alerts.
+### 🏬 Warehouse Manager (Optional)
 
-## Vendor Module
-Fulfilment rate and vendor performance.
+* Manage warehouse stock
+* Update packing and dispatch status
 
-# Analytics for each dashboard:
-## Admin:
-1. Purchase overview [Monthly]
-2. Sales Overview
-3. Platform Commission
-4. Active Vendors
-5. Fail Deliveries %
-6. Inventory Summary
-7. Order Summary
-8. Top and Low Quality Stock
-9. Top 10 Vendors by sales
-10. Active Vendors
+---
 
-## Vendor:
-1. Dail/Monthly Sales
-2. Order Acceptance Rate
-3. Return Rate
-4. Pending vs completed order.
-5. Product-wise sales
+## ⚙️ Functional Requirements
 
-## Customer/Client:
-1. Total order Placed
-2. Monthly Spending
-3. Order Success vs Order Failed
-4. Order Frequency
-5. Spend By Catagory
-6. Recommended Vendors
-7. Reorder suggestions
+### 🔐 Authentication & Authorization
 
-## Logistics:
-1. Delivery completed
-2. on time delivery%
-3. Daily delivery count
-4. Deliver success ratio
-5. Performance ranking
+* Login / Register
+* Role-based access control (RBAC)
 
-# Basic ER
+### 👤 User Management
 
-User(user_id, name, role)
-Vendor(vendor_id, name, rating)
-Product(Product_id, vendor_id, stock)
-OrderItem(order_id, product_id, qty)
-Delivery(delivery_id, driver_id, status)
-Payment(payemnt_id, order_id, amt)
+* Create / update users
+* Vendor onboarding and approval
+* Assign roles and permissions
 
+### 📦 Product & Inventory Management
+
+* CRUD operations on products
+* Stock in / stock out
+* Low stock alerts
+* Batch and expiry alerts
+
+### 🛒 Order Management
+
+* Place orders
+* Order approval workflow
+* Order lifecycle:
+  `Pending → Accepted → Packed → Dispatched → Delivered`
+* Order cancellation & return workflow
+
+### 🏭 Vendor Management
+
+* Vendor profile and rating
+* Vendor-wise product listings
+* Vendor performance tracking
+
+### 🚚 Logistics & Delivery
+
+* Delivery tracking
+* Proof of delivery (OTP / signature)
+
+### 💳 Payments & Invoicing
+
+* Invoice generation
+* Payment tracking
+* Refund handling
+* Commission calculation
+
+### 📊 Analytics & Reporting
+
+* Sales analytics
+* Customer behavior analytics
+* Vendor performance analytics
+
+---
+
+## 🛡️ Non-Functional Requirements
+
+* **Scalability:** Support high concurrent users
+* **Performance:** Fast API response times
+* **Security:** JWT-based authentication, HTTPS, role-based access
+* **Availability:** High uptime (99.9%)
+* **Maintainability:** Modular backend architecture
+* **Logging & Monitoring:** Centralized logs and error monitoring
+* **Data Privacy:** Secure handling of user and payment data
+* **Backup & Recovery:** Regular database backups
+
+---
+
+## 🏗️ High-Level Architecture
+
+**Frontend:** React.js
+**Backend:** Spring Boot / Node.js
+**Database:** MySQL
+**Core Services:**
+
+* Auth Service
+* Order Service
+* Inventory Service
+* Analytics Service
+
+```
+Frontend → API Gateway → Backend Services → Database
+```
+
+---
+
+## 🧩 Core Modules
+
+### 🔐 Authentication & Authorization
+
+* JWT tokens
+* Role-based access middleware
+
+### 👥 User Management
+
+* Role assignment
+* Vendor approval workflow
+
+### 🛒 Order Management
+
+* Order lifecycle
+* Status transitions
+
+### 📦 Inventory Module
+
+* Real-time stock sync
+* Threshold alerts
+
+### 🏭 Vendor Module
+
+* Fulfillment rate tracking
+* Vendor performance scoring
+
+---
+
+## 📊 Analytics (Dashboard-Wise)
+
+### 👑 Admin Dashboard
+
+* Monthly purchase overview
+* Sales overview
+* Platform commission
+* Active vendors
+* Failed deliveries (%)
+* Inventory summary
+* Order summary
+* Top & low-quality stock
+* Top 10 vendors by sales
+
+### 🏭 Vendor Dashboard
+
+* Daily / Monthly sales
+* Order acceptance rate
+* Return rate
+* Pending vs completed orders
+* Product-wise sales
+
+### 🧑‍💼 Customer Dashboard
+
+* Total orders placed
+* Monthly spending
+* Order success vs failed orders
+* Order frequency
+* Spend by category
+* Recommended vendors
+* Reorder suggestions
+
+### 🚚 Logistics Dashboard
+
+* Deliveries completed
+* On-time delivery (%)
+* Daily delivery count
+* Delivery success ratio
+* Performance ranking
+
+---
+
+## 🗃️ Basic ER Diagram (Entities)
+
+* User(user_id, name, role)
+* Vendor(vendor_id, name, rating)
+* Product(product_id, vendor_id, stock)
+* Order(order_id, customer_id, vendor_id, status)
+* OrderItem(order_id, product_id, quantity)
+* Inventory(inventory_id, product_id, quantity)
+* Delivery(delivery_id, driver_id, status)
+* Payment(payment_id, order_id, amount)
+
+---
+
+## 🛠️ Tech Stack
+
+* Frontend: React.js
+* Backend: Spring Boot / Node.js
+* Database: MySQL
+* Auth: JWT
+* API: REST
+
+---
 
