@@ -132,5 +132,13 @@ Fulfilment rate and vendor performance.
 4. Deliver success ratio
 5. Performance ranking
 
+# Basic ER
+
+User(user_id, name, role)
+Vendor(vendor_id, name, rating)
+Product(Product_id, vendor_id, stock)
+OrderItem(order_id, product_id, qty)
+Delivery(delivery_id, driver_id, status)
+Payment(payemnt_id, order_id, amt)
 
 
