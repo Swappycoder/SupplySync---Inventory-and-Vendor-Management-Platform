@@ -11,31 +11,31 @@
 Customer --> Place Order --> Vendor Confirms --> Inventory Updated --> Driver Assigned --> Delivery --> Payment --> Analytics.
 
 # User Roles:
-Admin:
+## Admin:
 1. Approves Vendors.
 2. Manages platform users.
 3. Monitors all orders and revenue.
 4. Controls pricing rules and commisions.
 5. View system wide analyics.
 
-Vendor:
+## Vendor:
 1. Manages products and stocks.
 2. Accepts/Rejects orders.
 3. Updates Inventory.
 4. Tracks revenue and fulfilment rate.
 
-Customer(Client):
+## Customer(Client):
 1. Browse vendors and products.
 2. Place Bulk orders.
 3. Tracks Delivery.
 4. View invoice and order history.
 
-Driver/Logistics Partner:
+## Driver/Logistics Partner:
 1. Accepts Delivery tasks.
 2. Updates Delivery Status.
 3. Track routes and delivery history.
 
-Warehouse Manager:
+## Warehouse Manager:
 1. Manage warehouse stock.
 2. Update packing and dispatching.
 
@@ -43,7 +43,7 @@ Warehouse Manager:
 1. Login/ Register
 2. Role Based Access
 
-User Management:
+## User Management:
 1. Create/update users
 2. Vendors onboarding and approval.
 3. Assign roles and permissions.
@@ -67,4 +67,70 @@ User Management:
 21. Sales analytics
 22. Customer behaviour
 
-#Non - Functional Requirements:
+# Non - Functional Requirements:
+
+
+# High level Architecture
+
+Frontend (Reactjs)
+Backend (Springboot/node.js)
+DataBase(MySQL)
+Auth Service
+Order Service
+Inventory Service
+Analytics Service
+
+# Core Modules
+## Authentication and Authorization:
+JWT tokens and Roles based access middleware.
+
+## User Management
+Role Assignment and Vendor approval.
+
+## order management
+LifeCycle of order and Status transition
+
+## Inventory Module
+Real-time stock sync and Threshold Alerts.
+
+## Vendor Module
+Fulfilment rate and vendor performance.
+
+# Analytics for each dashboard:
+## Admin:
+1. Purchase overview [Monthly]
+2. Sales Overview
+3. Platform Commission
+4. Active Vendors
+5. Fail Deliveries %
+6. Inventory Summary
+7. Order Summary
+8. Top and Low Quality Stock
+9. Top 10 Vendors by sales
+10. Active Vendors
+
+## Vendor:
+1. Dail/Monthly Sales
+2. Order Acceptance Rate
+3. Return Rate
+4. Pending vs completed order.
+5. Product-wise sales
+
+## Customer/Client:
+1. Total order Placed
+2. Monthly Spending
+3. Order Success vs Order Failed
+4. Order Frequency
+5. Spend By Catagory
+6. Recommended Vendors
+7. Reorder suggestions
+
+## Logistics:
+1. Delivery completed
+2. on time delivery%
+3. Daily delivery count
+4. Deliver success ratio
+5. Performance ranking
+
+
+
