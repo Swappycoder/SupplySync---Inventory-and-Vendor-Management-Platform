@@ -229,6 +229,9 @@ Frontend → API Gateway → Backend Services → Database
 * Delivery(delivery_id, driver_id, status)
 * Payment(payment_id, order_id, amount)
 
+
+<img width="512" height="512" alt="image" src="https://github.com/user-attachments/assets/ead35dce-e1c7-4ace-a8ef-10cb8e81e570" />
+
 ---
 
 ## 🛠️ Tech Stack
