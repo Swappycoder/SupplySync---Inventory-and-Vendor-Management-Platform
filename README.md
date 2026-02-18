@@ -230,7 +230,7 @@ Frontend → API Gateway → Backend Services → Database
 * Payment(payment_id, order_id, amount)
 
 
-<img width="1024" height="1536" alt="image" src="https://github.com/user-attachments/assets/cdf6261e-c851-4975-9e65-79ecf65ed038" />
+<img width="500" height="512" alt="image" src="https://github.com/user-attachments/assets/cdf6261e-c851-4975-9e65-79ecf65ed038" />
 
 
 ---
