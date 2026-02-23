@@ -12,7 +12,7 @@
         <relativePath/>
     </parent>
 
-    <groupId>com.phegondev</groupId>
+    <groupId>com.SupplySync</groupId>
     <artifactId>InventoryMgtSystem</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>InventoryMgtSystem</name>
