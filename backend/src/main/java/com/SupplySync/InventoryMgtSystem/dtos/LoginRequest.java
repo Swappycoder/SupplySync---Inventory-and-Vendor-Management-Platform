@@ -1,6 +1,7 @@
 package com.SupplySync.InventoryMgtSystem.dtos;
 
 
+import com.SupplySync.InventoryMgtSystem.enums.UserRole;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,4 +17,6 @@ public class LoginRequest {
 
     @NotBlank(message = "Password is required")
     private String password;
+    
+    private UserRole role;
 }

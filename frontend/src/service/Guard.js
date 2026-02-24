@@ -14,7 +14,10 @@ export const ProtectedRoute = ({element: Component}) => {
 
 export const AdminRoute = ({element:Component}) => {
     const location = useLocation();
-    return ApiService.isAdmin() ? (
+    const role = ApiService.getRole();
+    // Allow both ADMIN and MANAGER roles
+    const isAdminOrManager = role === "ADMIN" || role === "MANAGER";
+    return isAdminOrManager ? (
         Component
     ):(
         <Navigate to="/login" replace state={{from: location}}/>

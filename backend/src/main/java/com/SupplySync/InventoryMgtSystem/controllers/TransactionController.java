@@ -3,6 +3,7 @@ package com.SupplySync.InventoryMgtSystem.controllers;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import com.SupplySync.InventoryMgtSystem.dtos.Response;
@@ -58,6 +59,7 @@ public class TransactionController {
     }
 
     @PutMapping("/{transactionId}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Response> updateTransactionStatus(
             @PathVariable Long transactionId,
             @RequestBody TransactionStatus status) {

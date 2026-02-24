@@ -11,10 +11,13 @@ const PurchasePage = () => {
   const [note, setNote] = useState("");
   const [quantity, setQuantity] = useState("");
   const [message, setMessage] = useState("");
+  const [userRole, setUserRole] = useState("");
 
   useEffect(() => {
     const fetchproductsAndSuppliers = async () => {
       try {
+        const role = ApiService.getRole();
+        setUserRole(role);
         const productData = await ApiService.getAllProducts();
         const supplierData = await ApiService.getAllSuppliers();
         setProducts(productData.products);
@@ -72,12 +75,23 @@ const PurchasePage = () => {
     }, 4000);
   };
 
+  //Check if user is Manager or Admin
+  const canPurchase = () => {
+    return userRole === "MANAGER" || userRole === "ADMIN";
+  };
+
   return (
     <Layout>
       {message && <div className="message">{message}</div>}
-      <div className="purchase-form-page">
-        <h1>Receive Inventory</h1>
-        <form onSubmit={handleSubmit}>
+      {!canPurchase() ? (
+        <div className="unauthorized-message">
+          <h2>Access Denied</h2>
+          <p>Only Managers and Admins can perform purchase operations.</p>
+        </div>
+      ) : (
+        <div className="purchase-form-page">
+          <h1>Receive Inventory</h1>
+          <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label>Select product</label>
 
@@ -144,7 +158,8 @@ const PurchasePage = () => {
 
           <button type="submit">Purchase Product</button>
         </form>
-      </div>
+        </div>
+      )}
     </Layout>
   );
 };

@@ -11,6 +11,7 @@ const TransactionDetailsPage = () => {
   const [transaction, setTransaction] = useState(null);
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState("");
+  const [userRole, setUserRole] = useState("");
 
   const navigate = useNavigate();
 
@@ -18,6 +19,8 @@ const TransactionDetailsPage = () => {
   useEffect(() => {
     const getTransaction = async () => {
       try {
+        const role = ApiService.getRole();
+        setUserRole(role);
         const transactionData = await ApiService.getTransactionById(transactionId);
 
         if (transactionData.status === 200) {
@@ -120,7 +123,8 @@ const handleUpdateStatus = async()=>{
            </div>
            )}
 
-           {/* UPDATE TRANSACTION STATUS */}
+           {/* UPDATE TRANSACTION STATUS - ADMIN ONLY */}
+           {userRole === "ADMIN" && (
            <div className="section-card transaction-staus-update">
             <label>Status: </label>
             <select 
@@ -134,6 +138,7 @@ const handleUpdateStatus = async()=>{
             </select>
             <button onClick={()=>handleUpdateStatus()}>Update Staus</button>
            </div>
+           )}
            </>
         )}
       </div>

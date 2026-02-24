@@ -38,7 +38,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public Response registerUser(RegisterRequest registerRequest) {
 
-        UserRole role = UserRole.STAFF;
+        UserRole role = registerRequest.getRole();
+        
+        // Default to STAFF if no role is provided
+        if (role == null) {
+            role = UserRole.STAFF;
+        }
 
         User userToSave = User.builder()
                 .name(registerRequest.getName())
@@ -65,6 +70,12 @@ public class UserServiceImpl implements UserService {
         if (!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
             throw new InvalidCredentialsException("Password Does Not Match");
         }
+        
+        // Validate that the user's role matches the provided role (if provided)
+        if (loginRequest.getRole() != null && !user.getRole().equals(loginRequest.getRole())) {
+            throw new InvalidCredentialsException("User role does not match the selected role");
+        }
+        
         String token = jwtUtils.generateToken(user.getEmail());
 
         return Response.builder()

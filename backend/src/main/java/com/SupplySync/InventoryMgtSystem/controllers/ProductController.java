@@ -21,7 +21,7 @@ public class ProductController {
     private final ProductService productService;
 
     @PostMapping("/add")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
     public ResponseEntity<Response> saveProduct(
             @RequestParam("imageFile") MultipartFile imageFile,
             @RequestParam("name") String name,
@@ -44,7 +44,7 @@ public class ProductController {
     }
 
     @PutMapping("/update")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
     public ResponseEntity<Response> updateProduct(
             @RequestParam(value = "imageFile", required = false) MultipartFile imageFile,
             @RequestParam(value = "name", required = false) String name,

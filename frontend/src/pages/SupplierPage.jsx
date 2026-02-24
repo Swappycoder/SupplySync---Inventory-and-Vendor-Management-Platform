@@ -6,12 +6,15 @@ import { useNavigate } from "react-router-dom";
 const SupplierPage = () => {
   const [suppliers, setSuppliers] = useState([]);
   const [message, setMessage] = useState("");
+  const [userRole, setUserRole] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
     //fetech all suppliers
     const getSuppliers = async () => {
       try {
+        const role = ApiService.getRole();
+        setUserRole(role);
         const responseData = await ApiService.getAllSuppliers();
         if (responseData.status === 200) {
           setSuppliers(responseData.suppliers);
@@ -34,6 +37,11 @@ const SupplierPage = () => {
       setMessage("");
     }, 4000);
   };
+  //Check if user is Manager or Admin
+  const canModifySuppliers = () => {
+    return userRole === "MANAGER" || userRole === "ADMIN";
+  };
+
 
 
 //Delete Supplier
@@ -72,8 +80,12 @@ return(
                     <span>{supplier.name}</span>
 
                     <div className="supplier-actions">
-                        <button onClick={()=> navigate(`/edit-supplier/${supplier.id}`)} >Edit</button>
-                        <button onClick={()=> handleDeleteSupplier(supplier.id)} >Delete</button>
+                        {canModifySuppliers() && (
+                          <>
+                            <button onClick={()=> navigate(`/edit-supplier/${supplier.id}`)} >Edit</button>
+                            <button onClick={()=> handleDeleteSupplier(supplier.id)} >Delete</button>
+                          </>
+                        )}
                     </div>
 
                 </li>

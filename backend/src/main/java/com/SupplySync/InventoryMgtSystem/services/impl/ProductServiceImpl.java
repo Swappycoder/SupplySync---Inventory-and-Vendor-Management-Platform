@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -34,8 +35,8 @@ public class ProductServiceImpl implements ProductService {
 
     private static final String IMAGE_DIRECTORY = System.getProperty("user.dir") + "/product-images/";
 
-    //AFTER YOUR FRONTEND IS SETUP CHANGE THE IMAGE DIRECTORY TO YHE FRONTEND YOU ARE USING
-    private static final String IMAGE_DIRECTORY_2 = "/Users/dennismac/phegonDev/ims-react/public/products/";
+    @Value("${app.image.upload-dir:C:/Users/admin/Downloads/crazy backups/IMS-react/frontend/public/products/}")
+    private String imageUploadDir;
 
     @Override
     public Response saveProduct(ProductDTO productDTO, MultipartFile imageFile) {
@@ -227,21 +228,24 @@ public class ProductServiceImpl implements ProductService {
         }
 
         //create the directory if it doesn't exist
-        File directory = new File(IMAGE_DIRECTORY_2);
+        File directory = new File(imageUploadDir);
 
         if (!directory.exists()) {
-            directory.mkdir();
-            log.info("Directory was created");
+            boolean created = directory.mkdirs();
+            if (created) {
+                log.info("Directory was created: {}", imageUploadDir);
+            }
         }
         //generate unique file name for the image
         String uniqueFileName = UUID.randomUUID() + "_" + imageFile.getOriginalFilename();
 
         //Get the absolute path of the image
-        String imagePath = IMAGE_DIRECTORY_2 + uniqueFileName;
+        String imagePath = imageUploadDir + uniqueFileName;
 
         try {
             File destinationFile = new File(imagePath);
             imageFile.transferTo(destinationFile); //we are writing the image to this folder
+            log.info("Image saved successfully at: {}", imagePath);
         } catch (Exception e) {
             throw new IllegalArgumentException("Error saving Image: " + e.getMessage());
         }

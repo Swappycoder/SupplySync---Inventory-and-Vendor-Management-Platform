@@ -4,6 +4,7 @@ package com.SupplySync.InventoryMgtSystem.dtos;
 import com.SupplySync.InventoryMgtSystem.enums.UserRole;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,6 +26,7 @@ public class RegisterRequest {
     @NotBlank(message = "phoneNumber is required")
     private String phoneNumber;
 
+    @NotNull(message = "Role is required")
     private UserRole role;
 
 }

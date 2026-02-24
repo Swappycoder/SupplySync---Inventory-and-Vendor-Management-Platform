@@ -8,7 +8,9 @@ const logout = () => {
 
 const Sidebar = () => {
   const isAuth = ApiService.isAuthenticated();
-  const isAdmin = ApiService.isAdmin();
+  const role = ApiService.getRole();
+  // treat MANAGER like ADMIN for management access in the UI
+  const isAdmin = role === "ADMIN" || role === "MANAGER";
 
   return (
     <div className="sidebar">

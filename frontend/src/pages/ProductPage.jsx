@@ -7,6 +7,7 @@ import PaginationComponent from "../component/PaginationComponent";
 const ProductPage = () => {
   const [products, setProducts] = useState([]);
   const [message, setMessage] = useState("");
+  const [userRole, setUserRole] = useState("");
 
   const navigate = useNavigate();
 
@@ -18,6 +19,8 @@ const ProductPage = () => {
   useEffect(() => {
     const getProducts = async () => {
       try {
+        const role = ApiService.getRole();
+        setUserRole(role);
         const productData = await ApiService.getAllProducts();
 
         if (productData.status === 200) {

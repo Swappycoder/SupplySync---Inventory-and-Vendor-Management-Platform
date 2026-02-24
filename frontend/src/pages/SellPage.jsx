@@ -9,10 +9,13 @@ const SellPage = () => {
   const [note, setNote] = useState("");
   const [quantity, setQuantity] = useState("");
   const [message, setMessage] = useState("");
+  const [userRole, setUserRole] = useState("");
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
+        const role = ApiService.getRole();
+        setUserRole(role);
         const productData = await ApiService.getAllProducts();
         setProducts(productData.products);
       } catch (error) {
@@ -64,12 +67,23 @@ const SellPage = () => {
     }, 4000);
   };
 
+  //Check if user is Manager or Admin
+  const canSell = () => {
+    return userRole === "MANAGER" || userRole === "ADMIN";
+  };
+
   return (
     <Layout>
       {message && <div className="message">{message}</div>}
-      <div className="purchase-form-page">
-        <h1>Sell Product</h1>
-        <form onSubmit={handleSubmit}>
+      {!canSell() ? (
+        <div className="unauthorized-message">
+          <h2>Access Denied</h2>
+          <p>Only Managers and Admins can perform sell operations.</p>
+        </div>
+      ) : (
+        <div className="purchase-form-page">
+          <h1>Sell Product</h1>
+          <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label>Select product</label>
 
@@ -121,7 +135,8 @@ const SellPage = () => {
 
           <button type="submit">Sell Product</button>
         </form>
-      </div>
+        </div>
+      )}
     </Layout>
   );
 };
