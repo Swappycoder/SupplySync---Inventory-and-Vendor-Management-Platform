@@ -245,6 +245,4 @@ Frontend → API Gateway → Backend Services → Database
 * Auth: JWT
 * API: REST
 
----
 
->>>>>>> d4b3bf030376d7a429b4a7dd9418d38f84c73f8e
