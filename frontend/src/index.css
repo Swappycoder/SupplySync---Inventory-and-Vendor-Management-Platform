@@ -775,6 +775,43 @@ button[type="submit"]:hover {
 
 .dark-theme .theme-toggle { border-color: rgba(255,255,255,0.06); color: #e6eef0 }
 
+/* Dark theme overrides for product form page */
+.dark-theme .product-form-page {
+  background-color: var(--card-bg-dark);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.dark-theme .product-form-page h1 {
+  color: var(--accent-dark);
+}
+
+.dark-theme .product-form-page .form-group label {
+  color: var(--text-dark);
+}
+
+.dark-theme .product-form-page .form-group input,
+.dark-theme .product-form-page .form-group select,
+.dark-theme .product-form-page .form-group textarea {
+  background-color: var(--surface);
+  color: var(--text-dark);
+  border: 1px solid var(--card-border-dark);
+}
+
+.dark-theme .product-form-page .form-group input:focus,
+.dark-theme .product-form-page .form-group select:focus,
+.dark-theme .product-form-page .form-group textarea:focus {
+  border-color: var(--accent-dark);
+  box-shadow: 0 0 0 3px rgba(95, 233, 216, 0.15);
+}
+
+.dark-theme .product-form-page button {
+  background: linear-gradient(90deg, var(--accent-dark), #3ecbb8);
+}
+
+.dark-theme .product-form-page button:hover {
+  background: linear-gradient(90deg, #3ecbb8, var(--accent-dark));
+}
+
 /* Welcome title color for dark theme */
 .dark-theme .auth-title {
   color: #7feee0;

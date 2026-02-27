@@ -38,6 +38,12 @@ public class ProductServiceImpl implements ProductService {
     @Value("${app.image.upload-dir:C:/Users/admin/Downloads/crazy backups/IMS-react/frontend/public/products/}")
     private String imageUploadDir;
 
+    @Value("${server.port:5050}")
+    private int serverPort;
+
+    @Value("${spring.servlet.context-path:}")
+    private String contextPath;
+
     @Override
     public Response saveProduct(ProductDTO productDTO, MultipartFile imageFile) {
 
@@ -249,8 +255,12 @@ public class ProductServiceImpl implements ProductService {
         } catch (Exception e) {
             throw new IllegalArgumentException("Error saving Image: " + e.getMessage());
         }
-        return "products/"+uniqueFileName;
-
-
+        
+        // Return full URL path instead of relative path
+        String baseUrl = "http://localhost:" + serverPort;
+        if (contextPath != null && !contextPath.isEmpty()) {
+            baseUrl += contextPath;
+        }
+        return baseUrl + "/products/" + uniqueFileName;
     }
 }

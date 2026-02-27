@@ -16,32 +16,37 @@ const ProductPage = () => {
   const [totalPages, setTotalPages] = useState(0);
   const itemsPerPage = 10;
 
-  useEffect(() => {
-    const getProducts = async () => {
-      try {
-        const role = ApiService.getRole();
-        setUserRole(role);
-        const productData = await ApiService.getAllProducts();
+  const getProducts = async () => {
+    try {
+      const role = ApiService.getRole();
+      setUserRole(role);
+      const productData = await ApiService.getAllProducts();
 
-        if (productData.status === 200) {
-          setTotalPages(Math.ceil(productData.products.length / itemsPerPage));
+      if (productData.status === 200) {
+        setTotalPages(Math.ceil(productData.products.length / itemsPerPage));
 
-          setProducts(
-            productData.products.slice(
-              (currentPage - 1) * itemsPerPage,
-              currentPage * itemsPerPage
-            )
-          );
-        }
-      } catch (error) {
-        showMessage(
-          error.response?.data?.message || "Error Getting Products: " + error
+        setProducts(
+          productData.products.slice(
+            (currentPage - 1) * itemsPerPage,
+            currentPage * itemsPerPage
+          )
         );
       }
-    };
+    } catch (error) {
+      showMessage(
+        error.response?.data?.message || "Error Getting Products: " + error
+      );
+    }
+  };
 
+  useEffect(() => {
     getProducts();
   }, [currentPage]);
+
+  // Fetch products on component mount (including when returning from edit page)
+  useEffect(() => {
+    getProducts();
+  }, []);
 
   //Delete a product
   const handleDeleteProduct = async (productId) => {
@@ -94,7 +99,7 @@ const ProductPage = () => {
 
                 <div className="product-info">
                     <h3 className="name">{product.name}</h3>
-                    <p className="sku">Sku: {product.su}</p>
+                    <p className="sku">Sku: {product.sku}</p>
                     <p className="price">Price: {product.price}</p>
                     <p className="quantity">Quantity: {product.stockQuantity}</p>
                 </div>
