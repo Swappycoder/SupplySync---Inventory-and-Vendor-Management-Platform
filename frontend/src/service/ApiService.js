@@ -6,6 +6,15 @@ export default class ApiService {
     static BASE_URL = "http://localhost:5050/api";
     static ENCRYPTION_KEY = "phegon-dev-inventory";
 
+    // Generate a unique tab ID
+    static getTabId() {
+        let tabId = sessionStorage.getItem("tabId");
+        if (!tabId) {
+            tabId = crypto.randomUUID ? crypto.randomUUID() : Date.now().toString() + Math.random().toString();
+            sessionStorage.setItem("tabId", tabId);
+        }
+        return tabId;
+    }
 
     //encrypt data using cryptoJs
     static encrypt(data) {
@@ -21,12 +30,14 @@ export default class ApiService {
     //save token with encryption
     static saveToken(token) {
         const encryptedToken = this.encrypt(token);
-        localStorage.setItem("token", encryptedToken)
+        const tabId = this.getTabId();
+        sessionStorage.setItem(`token_${tabId}`, encryptedToken)
     }
 
     // retreive the token
     static getToken() {
-        const encryptedToken = localStorage.getItem("token");
+        const tabId = this.getTabId();
+        const encryptedToken = sessionStorage.getItem(`token_${tabId}`);
         if (!encryptedToken) return null;
         return this.decrypt(encryptedToken);
     }
@@ -34,19 +45,23 @@ export default class ApiService {
     //save Role with encryption
     static saveRole(role) {
         const encryptedRole = this.encrypt(role);
-        localStorage.setItem("role", encryptedRole)
+        const tabId = this.getTabId();
+        sessionStorage.setItem(`role_${tabId}`, encryptedRole)
     }
 
     // retreive the role
     static getRole() {
-        const encryptedRole = localStorage.getItem("role");
+        const tabId = this.getTabId();
+        const encryptedRole = sessionStorage.getItem(`role_${tabId}`);
         if (!encryptedRole) return null;
         return this.decrypt(encryptedRole);
     }
 
     static clearAuth() {
-        localStorage.removeItem("token");
-        localStorage.removeItem("role");
+        const tabId = this.getTabId();
+        sessionStorage.removeItem(`token_${tabId}`);
+        sessionStorage.removeItem(`role_${tabId}`);
+        localStorage.removeItem("shiftStartTime");
     }
 
 

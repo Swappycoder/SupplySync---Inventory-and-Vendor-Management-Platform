@@ -24,19 +24,16 @@ const DashboardPage = () => {
   const userRole = ApiService.getRole();
   const [shiftStartTime, setShiftStartTime] = useState(() => {
     const stored = localStorage.getItem("shiftStartTime");
-    return stored ? new Date(stored) : new Date();
+    return stored ? new Date(stored) : null;
+  });
+  const [isClockedIn, setIsClockedIn] = useState(() => {
+    return localStorage.getItem("shiftStartTime") !== null;
   });
   const [itemsSoldToday, setItemsSoldToday] = useState(0);
   const [lowStockItems, setLowStockItems] = useState([]);
+  const [imageLoadingStates, setImageLoadingStates] = useState({});
 
-  // Store shift start time on mount
-  useEffect(() => {
-    if (!localStorage.getItem("shiftStartTime")) {
-      const now = new Date();
-      localStorage.setItem("shiftStartTime", now.toISOString());
-      setShiftStartTime(now);
-    }
-  }, []);
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -87,7 +84,13 @@ const DashboardPage = () => {
         const productsResponse = await ApiService.getAllProducts();
         if (productsResponse.status === 200) {
           const allProducts = productsResponse.products || [];
-          const lowStock = allProducts.filter(p => (p.quantity || 0) < 10).slice(0, 5);
+          const lowStock = allProducts
+            .filter(p => {
+              // Use stockQuantity which is the actual field name in ProductDTO
+              const qty = p.stockQuantity != null ? Number(p.stockQuantity) : 0;
+              return qty > 0 && qty < 10;
+            })
+            .slice(0, 5);
           setLowStockItems(lowStock);
         }
       } catch (error) {
@@ -148,6 +151,22 @@ const DashboardPage = () => {
     }, 4000);
   };
 
+  // Handle clock in/out toggle
+  const handleClockToggle = () => {
+    if (isClockedIn) {
+      // Clock out - clear the shift time
+      localStorage.removeItem("shiftStartTime");
+      setShiftStartTime(null);
+      setIsClockedIn(false);
+    } else {
+      // Clock in - set the shift start time
+      const now = new Date();
+      localStorage.setItem("shiftStartTime", now.toISOString());
+      setShiftStartTime(now);
+      setIsClockedIn(true);
+    }
+  };
+
   return (
     <Layout>
       {message && <div className="message">{message}</div>}
@@ -169,12 +188,18 @@ const DashboardPage = () => {
               </div>
               <div className="stat-card">
                 <h4>Shift Started At</h4>
-                <p className="shift-time">{shiftStartTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
+                <p className="shift-time">{shiftStartTime ? shiftStartTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : 'Not Clocked In'}</p>
               </div>
               <div className="stat-card">
                 <h4>Items Sold Today</h4>
                 <p>{itemsSoldToday}</p>
               </div>
+            </div>
+
+            <div className="clock-section">
+              <button onClick={handleClockToggle} className="clock-btn">
+                {isClockedIn ? 'Clock Out' : 'Clock In'}
+              </button>
             </div>
 
             <div className="low-stock-section">
@@ -188,7 +213,7 @@ const DashboardPage = () => {
                       <div className="stock-name">{item.name}</div>
                       <div className="stock-qty">
                         <span className="qty-label">Stock:</span>
-                        <span className="qty-value">{item.quantity}</span>
+                        <span className="qty-value">{item.stockQuantity}</span>
                       </div>
                     </li>
                   ))}
