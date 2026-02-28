@@ -3,6 +3,10 @@
 node_modules/
 frontend/node_modules/
 
+# Maven
+target/
+*.jar
+
 # Compiled class file
 *.class
 
