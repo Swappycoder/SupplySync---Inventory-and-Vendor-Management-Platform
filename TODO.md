@@ -1,22 +1,21 @@
-# Image Path Fix - TODO
+# TODO: Fix Late Clock-in Defaulters List
 
 ## Task
-Fix image upload path issue so images display correctly when uploaded from frontend
+When staff clocks in late, they should appear in the admin dashboard's late defaulters list.
 
-## Steps Completed:
+## Issues Identified & Fixed
+1. ✅ Fixed enum comparison using `==` instead of `.equals()` in AttendanceServiceImpl
+2. ✅ Updated repository queries to use proper enum handling with UserRole parameter
+3. ✅ Updated service methods to pass UserRole.STAFF to repository methods
 
-- [x] 1. Update ProductServiceImpl.java to return full URL path for images
-- [x] 2. Configure Spring Boot to serve static files from the upload directory (WebConfig.java)
-- [x] 3. Fix typo in ProductPage.jsx (product.su -> product.sku)
+## Files Edited
+1. ✅ backend/src/main/java/com/SupplySync/InventoryMgtSystem/services/impl/AttendanceServiceImpl.java
+   - Changed `u.getRole() == UserRole.STAFF` to `u.getRole().equals(UserRole.STAFF)` (2 occurrences)
+   - Updated method calls to pass UserRole.STAFF parameter to repository
+2. ✅ backend/src/main/java/com/SupplySync/InventoryMgtSystem/repositories/AttendanceRecordRepository.java
+   - Added import for UserRole enum
+   - Updated queries to use parameterized `:role` instead of hardcoded string `'STAFF'`
 
-## Technical Details:
-- Backend saves images to: C:/Users/admin/Downloads/crazy backups/IMS-react/frontend/public/products/
-- Solution implemented:
-  - Backend now returns full URL: http://localhost:5050/products/filename.jpg
-  - Spring Boot serves static files from the products directory via /products/** endpoint
-
-## To Test:
-1. Rebuild the backend: cd backend && ./mvnw clean package -DskipTests
-2. Restart the Spring Boot application
-3. Upload a product image from the frontend
-4. Verify the image displays correctly
+## Testing
+- Rebuild the backend application
+- Staff who clock in after 9:00 AM should now appear in the late defaulters list in the admin dashboard

@@ -9,6 +9,7 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @Data
 @Builder
@@ -42,6 +43,13 @@ public class Response {
 
     private TransactionDTO transaction;
     private List<TransactionDTO> transactions;
+
+    //Attendance fields
+    private AttendanceRecordDTO attendanceRecord;
+    private List<AttendanceRecordDTO> attendanceRecords;
+    private List<Map<String, Object>> staffAnalysis;
+    private List<Map<String, Object>> defaulters;
+    private Map<String, Object> attendanceStats;
 
     private final LocalDateTime timestamp = LocalDateTime.now();
 

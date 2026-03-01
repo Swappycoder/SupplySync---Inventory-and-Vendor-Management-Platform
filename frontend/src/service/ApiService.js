@@ -334,4 +334,57 @@ export default class ApiService {
         return role === "ADMIN";
     }
 
+    /**ATTENDANCE ENDPOINTS */
+    static async clockIn() {
+        const response = await axios.post(`${this.BASE_URL}/attendance/clock-in`, {}, {
+            headers: this.getHeader()
+        })
+        return response.data;
+    }
+
+    static async clockOut() {
+        const response = await axios.post(`${this.BASE_URL}/attendance/clock-out`, {}, {
+            headers: this.getHeader()
+        })
+        return response.data;
+    }
+
+    static async getUserAttendance(startDate, endDate) {
+        const response = await axios.get(`${this.BASE_URL}/attendance/user/${1}`, {
+            headers: this.getHeader(),
+            params: { startDate, endDate }
+        })
+        return response.data;
+    }
+
+    static async getStaffAttendanceAnalysis(startDate, endDate) {
+        const response = await axios.get(`${this.BASE_URL}/attendance/analysis`, {
+            headers: this.getHeader(),
+            params: { startDate, endDate }
+        })
+        return response.data;
+    }
+
+    static async getDefaultersList(startDate, endDate) {
+        const response = await axios.get(`${this.BASE_URL}/attendance/defaulters`, {
+            headers: this.getHeader(),
+            params: { startDate, endDate }
+        })
+        return response.data;
+    }
+
+    static async getAttendanceStats() {
+        const response = await axios.get(`${this.BASE_URL}/attendance/stats`, {
+            headers: this.getHeader()
+        })
+        return response.data;
+    }
+
+    static async resetIncompleteRecord() {
+        const response = await axios.post(`${this.BASE_URL}/attendance/reset`, {}, {
+            headers: this.getHeader()
+        })
+        return response.data;
+    }
+
 }
